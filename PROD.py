@@ -10,11 +10,16 @@ from dataclasses import dataclass, field
 
 from datasets import load_from_disk
 from transformers import AutoTokenizer, AutoModelForCausalLM, HfArgumentParser,Seq2SeqTrainingArguments
+from transformers import BitsAndBytesConfig
 
 
 import wandb
 wandb.init(project="unlearn_code", name="PROD")
 
+quantization_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype=torch.float16
+)
 
 def seed_everything(seed=2003):
     torch.manual_seed(seed)
@@ -72,7 +77,9 @@ def get_output_distribution(logits, labels, top_p=0.8, alpha=0.0, temperature=0.
         mask_start = torch.zeros_like(labels, dtype=torch.bool) 
         mask_start[:, mask_start_pos:] = 1 
         labels = labels.long()
-        mask = F.one_hot(labels, num_classes=copied_logits.size(-1)) & mask_start.unsqueeze(-1)
+        mask = torch.zeros_like(copied_logits, dtype=torch.bool)
+        mask.scatter_(-1, labels.unsqueeze(-1), True)
+        mask = mask & mask_start.unsqueeze(-1)
         copied_logits = copied_logits.masked_fill(mask.bool(), -float('inf'))
 
         filtered_logit = top_p_filtering(copied_logits, top_p=top_p, N=N, max_N=max_N, filter_value=-float('inf'))
@@ -84,8 +91,14 @@ def get_output_distribution(logits, labels, top_p=0.8, alpha=0.0, temperature=0.
 
         ground_truth_probs = F.softmax(scaled_logit, dim=-1)
 
-        one_hot = F.one_hot(labels, num_classes=probs.size(-1)).bool()
-        ground_truth_probs = torch.where(one_hot, -alpha*probs[..., :-1, :], ground_truth_probs)
+        batch_indices = torch.arange(labels.size(0), device=labels.device).unsqueeze(1)
+        seq_indices = torch.arange(labels.size(1), device=labels.device).unsqueeze(0)
+
+        ground_truth_probs[batch_indices, seq_indices, labels] = torch.where(
+            mask[batch_indices, seq_indices, labels],
+            -alpha * probs[..., :-1, :][batch_indices, seq_indices, labels],
+            ground_truth_probs[batch_indices, seq_indices, labels]
+        )
 
     return probs, ground_truth_probs
 
@@ -107,6 +120,7 @@ def collate_fn(batch, tokenizer, max_length, device):
 
 def train(model, ref_model, tokenizer, optimizer, train_dataloader, epochs=1, gradient_accumulation_steps=1, top_p=0.8, temperature=0.8, N=1, max_N=10, alpha=0.0):
     model.train()
+    device = model.device
 
     for epoch in range(int(epochs)):
         print(f"Epoch {epoch + 1}/{epochs}")
@@ -117,18 +131,43 @@ def train(model, ref_model, tokenizer, optimizer, train_dataloader, epochs=1, gr
             prompt_disprefered_mask = batch['prompt_disprefered_mask']
 
             with torch.no_grad():
-                _, ground_truth_distribution = get_output_distribution(ref_model(prompt_disprefered_ids, attention_mask=prompt_disprefered_mask).logits, 
-                                                                       prompt_disprefered_ids, 
-                                                                       top_p=top_p, 
-                                                                       alpha=alpha,
-                                                                       temperature=temperature, 
-                                                                       N=N, 
-                                                                       max_N=max_N)
+                # Daten kurz auf die CPU legen für das ref_model
+                ref_inputs_ids = prompt_disprefered_ids.to('cpu')
+                ref_mask = prompt_disprefered_mask.to('cpu')
+                
+                ref_outputs = ref_model(
+                    ref_inputs_ids, 
+                    attention_mask=ref_mask,
+                    use_cache=False
+                )
+                ref_logits = ref_outputs.logits.to(device) # Ergebnisse zurück auf die GPU holen
 
-            model_disprefered_logits = model(prompt_disprefered_ids, attention_mask=prompt_disprefered_mask).logits
+                _, ground_truth_distribution = get_output_distribution(
+                    ref_logits, 
+                    prompt_disprefered_ids, # Nutzt die GPU-IDs
+                    top_p=top_p, 
+                    alpha=alpha,
+                    temperature=temperature, 
+                    N=N, 
+                    max_N=max_N
+                )
+
+            ground_truth_distribution = ground_truth_distribution.clone()
+            del ref_outputs, ref_logits
+            torch.cuda.empty_cache()
+
+            # 2. Aktives Modell (hier werden Gradienten benötigt)
+            model_outputs = model(
+                prompt_disprefered_ids, 
+                attention_mask=prompt_disprefered_mask,
+                use_cache=False
+            )
+
+            model_disprefered_logits = model_outputs.logits
 
             loss = calculate_loss(model_disprefered_logits, ground_truth_distribution)
-            
+
+            loss = loss / gradient_accumulation_steps
             loss.backward()
 
             if (step + 1) % gradient_accumulation_steps == 0:
@@ -201,12 +240,14 @@ def main():
             ref_model_max_memory[i] = f'{total_memory[i]}GB'
 
 
-    model = AutoModelForCausalLM.from_pretrained(model_path, device_map = "auto")
+    model = AutoModelForCausalLM.from_pretrained(model_path, quantization_config=quantization_config, device_map = "auto")
     model.config.use_cache = False
     model.config.pretraining_tp = 1
+    model.gradient_checkpointing_enable()
+    model.enable_input_require_grads()
 
     # ------------------
-    ref_model = AutoModelForCausalLM.from_pretrained(model_path, device_map = "auto")
+    ref_model = AutoModelForCausalLM.from_pretrained(model_path, quantization_config=quantization_config, device_map = "cpu")
     ref_model.config.use_cache = False
     ref_model.config.pretraining_tp = 1
     ref_model.eval()
@@ -224,14 +265,16 @@ def main():
     accelerator = Accelerator()
     device = accelerator.device
     model = accelerator.prepare(model)
-    ref_model = accelerator.prepare(ref_model)
     # -----------
 
     # use parameters from training_args to set up optimizer
     optimizer = AdamW(model.parameters(), lr=training_args.learning_rate, eps=training_args.adam_epsilon, weight_decay=training_args.weight_decay, betas=(training_args.adam_beta1, training_args.adam_beta2))
+    optimizer = accelerator.prepare(optimizer)
 
     dataset = load_from_disk(custom_args.train_data_path)
     train_dataloader = torch.utils.data.DataLoader(dataset, batch_size=training_args.per_device_train_batch_size, shuffle=True, collate_fn=partial(collate_fn, tokenizer=tokenizer, max_length=custom_args.max_seq_length, device=device))
+
+    ref_model.eval()
 
     train(model, 
             ref_model, 

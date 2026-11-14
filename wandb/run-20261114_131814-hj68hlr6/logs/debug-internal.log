@@ -1,0 +1,15 @@
+{"time":"2026-11-14T13:18:14.490649543+01:00","level":"INFO","msg":"stream: starting","core version":"0.19.7","symlink path":"/home/alex/prod_bp/PROD/wandb/run-20261114_131814-hj68hlr6/logs/debug-core.log"}
+{"time":"2026-11-14T13:18:14.593477731+01:00","level":"INFO","msg":"created new stream","id":"hj68hlr6"}
+{"time":"2026-11-14T13:18:14.593500554+01:00","level":"INFO","msg":"stream: started","id":"hj68hlr6"}
+{"time":"2026-11-14T13:18:14.593526623+01:00","level":"INFO","msg":"handler: started","stream_id":"hj68hlr6"}
+{"time":"2026-11-14T13:18:14.593517466+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"hj68hlr6"}
+{"time":"2026-11-14T13:18:14.593746747+01:00","level":"INFO","msg":"sender: started","stream_id":"hj68hlr6"}
+{"time":"2026-11-14T13:18:15.098476135+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2026-11-14T13:18:34.224552453+01:00","level":"INFO","msg":"stream: closing","id":"hj68hlr6"}
+{"time":"2026-11-14T13:18:34.224834474+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2026-11-14T13:18:34.22538502+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2026-11-14T13:18:35.141260429+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2026-11-14T13:18:35.612961262+01:00","level":"INFO","msg":"handler: closed","stream_id":"hj68hlr6"}
+{"time":"2026-11-14T13:18:35.612984105+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"hj68hlr6"}
+{"time":"2026-11-14T13:18:35.612999734+01:00","level":"INFO","msg":"sender: closed","stream_id":"hj68hlr6"}
+{"time":"2026-11-14T13:18:35.61307721+01:00","level":"INFO","msg":"stream: closed","id":"hj68hlr6"}

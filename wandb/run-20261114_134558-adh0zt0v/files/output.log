@@ -1,0 +1,214 @@
+Seq2SeqTrainingArguments(
+_n_gpu=1,
+accelerator_config={'split_batches': False, 'dispatch_batches': None, 'even_batches': True, 'use_seedable_sampler': True, 'non_blocking': False, 'gradient_accumulation_kwargs': None, 'use_configured_state': False},
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+auto_find_batch_size=False,
+average_tokens_across_devices=False,
+batch_eval_metrics=False,
+bf16=False,
+bf16_full_eval=False,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_persistent_workers=False,
+dataloader_pin_memory=True,
+dataloader_prefetch_factor=None,
+ddp_backend=None,
+ddp_broadcast_buffers=None,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+ddp_timeout=1800,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+dispatch_batches=None,
+do_eval=False,
+do_predict=False,
+do_train=False,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_do_concat_batches=True,
+eval_on_start=False,
+eval_steps=None,
+eval_strategy=IntervalStrategy.NO,
+eval_use_gather_object=False,
+evaluation_strategy=None,
+fp16=False,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+fsdp=[],
+fsdp_config={'min_num_params': 0, 'xla': False, 'xla_fsdp_v2': False, 'xla_fsdp_grad_ckpt': False},
+fsdp_min_num_params=0,
+fsdp_transformer_layer_cls_to_wrap=None,
+full_determinism=False,
+generation_config=None,
+generation_max_length=None,
+generation_num_beams=None,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+gradient_checkpointing_kwargs=None,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=auto,
+hub_always_push=False,
+hub_model_id=None,
+hub_private_repo=None,
+hub_strategy=HubStrategy.EVERY_SAVE,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_for_metrics=[],
+include_inputs_for_metrics=False,
+include_num_input_tokens_seen=False,
+include_tokens_per_second=False,
+jit_mode_eval=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=5e-05,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=0,
+log_level=passive,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=outputs/models/PROD_lr5e-6/runs/Nov14_13-45-59_AlexPC,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=500,
+logging_strategy=IntervalStrategy.STEPS,
+lr_scheduler_kwargs={},
+lr_scheduler_type=SchedulerType.LINEAR,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+mp_parameters=,
+neftune_noise_alpha=None,
+no_cuda=False,
+num_train_epochs=3.0,
+optim=OptimizerNames.ADAMW_TORCH,
+optim_args=None,
+optim_target_modules=None,
+output_dir=outputs/models/PROD_lr5e-6,
+overwrite_output_dir=False,
+past_index=-1,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=8,
+predict_with_generate=False,
+prediction_loss_only=False,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+ray_scope=last,
+remove_unused_columns=True,
+report_to=['tensorboard', 'wandb'],
+restore_callback_states_from_checkpoint=False,
+resume_from_checkpoint=None,
+run_name=outputs/models/PROD_lr5e-6,
+save_on_each_node=False,
+save_only_model=False,
+save_safetensors=True,
+save_steps=500,
+save_strategy=SaveStrategy.STEPS,
+save_total_limit=None,
+seed=42,
+skip_memory_metrics=True,
+sortish_sampler=False,
+split_batches=None,
+tf32=None,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torch_empty_cache_steps=None,
+torchdynamo=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+use_cpu=False,
+use_ipex=False,
+use_legacy_prediction_loop=False,
+use_liger_kernel=False,
+use_mps_device=False,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.0,
+)
+CustomArguments(model_name='codellama/CodeLlama-7b-hf', model_path=None, last_checkpoint=None, train_data_path='data/forget_data', max_seq_length=512, lora_rank=16, top_p=0.8, temperature=None, N=1, max_N=None, alpha=0.0)
+Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:07<00:00,  3.79s/it]
+Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [01:08<00:00, 34.09s/it]
+Epoch 1/3.0
+  8%|█████████▏                                                                                                             | 1/13 [15:02<3:00:34, 902.90s/it]
+Traceback (most recent call last):
+  File "/home/alex/prod_bp/PROD/PROD.py", line 295, in <module>
+    main()
+  File "/home/alex/prod_bp/PROD/PROD.py", line 279, in main
+    train(model,
+  File "/home/alex/prod_bp/PROD/PROD.py", line 138, in train
+    ref_outputs = ref_model(
+                  ^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py", line 834, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py", line 592, in forward
+    layer_outputs = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py", line 335, in forward
+    hidden_states, self_attn_weights = self.self_attn(
+                                       ^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py", line 271, in forward
+    value_states = self.v_proj(hidden_states).view(hidden_shape).transpose(1, 2)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/bitsandbytes/nn/modules.py", line 637, in forward
+    return bnb.matmul_4bit(x, self.weight, bias=bias, quant_state=quant_state).to(inp_dtype)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/bitsandbytes/autograd/_functions.py", line 462, in matmul_4bit
+    result = torch.ops.bitsandbytes.gemm_4bit.default(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/_ops.py", line 871, in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/_compile.py", line 54, in inner
+    return disable_fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/_dynamo/eval_frame.py", line 1269, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/torch/library.py", line 749, in func_no_dynamo
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alex/prod_bp/.venv/lib/python3.12/site-packages/bitsandbytes/backends/default/ops.py", line 342, in _gemm_4bit_default_impl
+    return torch.nn.functional.linear(A, B_dq, bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

@@ -1,0 +1,15 @@
+{"time":"2026-11-14T13:10:32.909282562+01:00","level":"INFO","msg":"stream: starting","core version":"0.19.7","symlink path":"/home/alex/prod_bp/PROD/wandb/run-20261114_131032-kgvj10bg/logs/debug-core.log"}
+{"time":"2026-11-14T13:10:33.012632365+01:00","level":"INFO","msg":"created new stream","id":"kgvj10bg"}
+{"time":"2026-11-14T13:10:33.012660297+01:00","level":"INFO","msg":"stream: started","id":"kgvj10bg"}
+{"time":"2026-11-14T13:10:33.012673753+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"kgvj10bg"}
+{"time":"2026-11-14T13:10:33.012721943+01:00","level":"INFO","msg":"sender: started","stream_id":"kgvj10bg"}
+{"time":"2026-11-14T13:10:33.012848+01:00","level":"INFO","msg":"handler: started","stream_id":"kgvj10bg"}
+{"time":"2026-11-14T13:10:33.708216012+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2026-11-14T13:11:12.290955604+01:00","level":"INFO","msg":"stream: closing","id":"kgvj10bg"}
+{"time":"2026-11-14T13:11:12.290992343+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2026-11-14T13:11:12.29226653+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2026-11-14T13:11:13.247766708+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2026-11-14T13:11:13.750621147+01:00","level":"INFO","msg":"handler: closed","stream_id":"kgvj10bg"}
+{"time":"2026-11-14T13:11:13.750637268+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"kgvj10bg"}
+{"time":"2026-11-14T13:11:13.750659239+01:00","level":"INFO","msg":"sender: closed","stream_id":"kgvj10bg"}
+{"time":"2026-11-14T13:11:13.750723059+01:00","level":"INFO","msg":"stream: closed","id":"kgvj10bg"}

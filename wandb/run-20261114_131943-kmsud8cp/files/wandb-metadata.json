@@ -1,0 +1,49 @@
+{
+  "os":  "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+  "python":  "CPython 3.12.3",
+  "startedAt":  "2026-11-14T12:19:43.118965Z",
+  "args":  [
+    "--output_dir",
+    "outputs/models/PROD_lr5e-6",
+    "--max_seq_length",
+    "512",
+    "--train_data_path",
+    "data/forget_data"
+  ],
+  "program":  "/home/alex/prod_bp/PROD/PROD.py",
+  "codePath":  "PROD.py",
+  "git":  {
+    "remote":  "https://github.com/aidzk/PROD_BP.git",
+    "commit":  "39d6c2d435120cea21b352dc5329b7394c815fde"
+  },
+  "email":  "idziak.alexandra@gmail.com",
+  "root":  "/home/alex/prod_bp/PROD",
+  "host":  "AlexPC",
+  "executable":  "/home/alex/prod_bp/.venv/bin/python",
+  "codePathLocal":  "PROD.py",
+  "cpu_count":  8,
+  "cpu_count_logical":  16,
+  "gpu":  "NVIDIA GeForce RTX 5070",
+  "gpu_count":  1,
+  "disk":  {
+    "/":  {
+      "total":  "393519529984",
+      "used":  "183385034752"
+    }
+  },
+  "memory":  {
+    "total":  "16680280064"
+  },
+  "cpu":  {
+    "count":  8,
+    "countLogical":  16
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "NVIDIA GeForce RTX 5070",
+      "memoryTotal":  "12820938752",
+      "cudaCores":  6144
+    }
+  ],
+  "cudaVersion":  "13.2"
+}

@@ -1,0 +1,15 @@
+{"time":"2026-11-14T13:19:43.120140596+01:00","level":"INFO","msg":"stream: starting","core version":"0.19.7","symlink path":"/home/alex/prod_bp/PROD/wandb/run-20261114_131943-kmsud8cp/logs/debug-core.log"}
+{"time":"2026-11-14T13:19:43.222503394+01:00","level":"INFO","msg":"created new stream","id":"kmsud8cp"}
+{"time":"2026-11-14T13:19:43.222528721+01:00","level":"INFO","msg":"stream: started","id":"kmsud8cp"}
+{"time":"2026-11-14T13:19:43.222548469+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"kmsud8cp"}
+{"time":"2026-11-14T13:19:43.222556804+01:00","level":"INFO","msg":"handler: started","stream_id":"kmsud8cp"}
+{"time":"2026-11-14T13:19:43.222600026+01:00","level":"INFO","msg":"sender: started","stream_id":"kmsud8cp"}
+{"time":"2026-11-14T13:19:43.768739988+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2026-11-14T13:20:03.908847404+01:00","level":"INFO","msg":"stream: closing","id":"kmsud8cp"}
+{"time":"2026-11-14T13:20:03.909823972+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2026-11-14T13:20:03.912532249+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2026-11-14T13:20:04.753127521+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2026-11-14T13:20:05.115460324+01:00","level":"INFO","msg":"handler: closed","stream_id":"kmsud8cp"}
+{"time":"2026-11-14T13:20:05.115490641+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"kmsud8cp"}
+{"time":"2026-11-14T13:20:05.115527059+01:00","level":"INFO","msg":"sender: closed","stream_id":"kmsud8cp"}
+{"time":"2026-11-14T13:20:05.115554391+01:00","level":"INFO","msg":"stream: closed","id":"kmsud8cp"}

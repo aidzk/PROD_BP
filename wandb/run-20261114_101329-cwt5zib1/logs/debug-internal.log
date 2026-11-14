@@ -1,0 +1,15 @@
+{"time":"2026-11-14T10:13:29.935597128+01:00","level":"INFO","msg":"stream: starting","core version":"0.19.7","symlink path":"/home/alex/prod_bp/PROD/wandb/run-20261114_101329-cwt5zib1/logs/debug-core.log"}
+{"time":"2026-11-14T10:13:30.039623501+01:00","level":"INFO","msg":"created new stream","id":"cwt5zib1"}
+{"time":"2026-11-14T10:13:30.039650652+01:00","level":"INFO","msg":"stream: started","id":"cwt5zib1"}
+{"time":"2026-11-14T10:13:30.039671832+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"cwt5zib1"}
+{"time":"2026-11-14T10:13:30.039678965+01:00","level":"INFO","msg":"handler: started","stream_id":"cwt5zib1"}
+{"time":"2026-11-14T10:13:30.03969716+01:00","level":"INFO","msg":"sender: started","stream_id":"cwt5zib1"}
+{"time":"2026-11-14T10:13:30.877591432+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2026-11-14T10:19:48.840526323+01:00","level":"INFO","msg":"stream: closing","id":"cwt5zib1"}
+{"time":"2026-11-14T10:19:48.84162349+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2026-11-14T10:19:48.852053121+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2026-11-14T10:19:49.971184958+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2026-11-14T10:19:50.285985455+01:00","level":"INFO","msg":"handler: closed","stream_id":"cwt5zib1"}
+{"time":"2026-11-14T10:19:50.286023356+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"cwt5zib1"}
+{"time":"2026-11-14T10:19:50.286049475+01:00","level":"INFO","msg":"sender: closed","stream_id":"cwt5zib1"}
+{"time":"2026-11-14T10:19:50.286275221+01:00","level":"INFO","msg":"stream: closed","id":"cwt5zib1"}

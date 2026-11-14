@@ -1,0 +1,15 @@
+{"time":"2026-11-14T13:33:38.401779296+01:00","level":"INFO","msg":"stream: starting","core version":"0.19.7","symlink path":"/home/alex/prod_bp/PROD/wandb/run-20261114_133338-ws5vn9oz/logs/debug-core.log"}
+{"time":"2026-11-14T13:33:38.505321092+01:00","level":"INFO","msg":"created new stream","id":"ws5vn9oz"}
+{"time":"2026-11-14T13:33:38.505350748+01:00","level":"INFO","msg":"stream: started","id":"ws5vn9oz"}
+{"time":"2026-11-14T13:33:38.5053623+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"ws5vn9oz"}
+{"time":"2026-11-14T13:33:38.505376917+01:00","level":"INFO","msg":"sender: started","stream_id":"ws5vn9oz"}
+{"time":"2026-11-14T13:33:38.505408857+01:00","level":"INFO","msg":"handler: started","stream_id":"ws5vn9oz"}
+{"time":"2026-11-14T13:33:38.940232463+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2026-11-14T13:34:59.258063667+01:00","level":"INFO","msg":"stream: closing","id":"ws5vn9oz"}
+{"time":"2026-11-14T13:34:59.258559591+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2026-11-14T13:34:59.261081319+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2026-11-14T13:35:00.03078965+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2026-11-14T13:35:00.365671598+01:00","level":"INFO","msg":"handler: closed","stream_id":"ws5vn9oz"}
+{"time":"2026-11-14T13:35:00.36569394+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ws5vn9oz"}
+{"time":"2026-11-14T13:35:00.365703468+01:00","level":"INFO","msg":"sender: closed","stream_id":"ws5vn9oz"}
+{"time":"2026-11-14T13:35:00.365764423+01:00","level":"INFO","msg":"stream: closed","id":"ws5vn9oz"}
