@@ -91,6 +91,17 @@ def get_output_distribution(logits, labels, top_p=0.8, alpha=0.0, temperature=0.
 
         ground_truth_probs = F.softmax(scaled_logit, dim=-1)
 
+        invalid_rows = torch.isnan(ground_truth_probs).any(dim=-1, keepdim=True)
+        if invalid_rows.any():
+            uniform_probs = torch.full_like(
+                ground_truth_probs,
+                1.0 / ground_truth_probs.size(-1)
+            )
+            ground_truth_probs = torch.where(invalid_rows, uniform_probs, ground_truth_probs)
+
+        row_sums = ground_truth_probs.sum(dim=-1, keepdim=True).clamp(min=1e-12)
+        ground_truth_probs = ground_truth_probs / row_sums
+
         batch_indices = torch.arange(labels.size(0), device=labels.device).unsqueeze(1)
         seq_indices = torch.arange(labels.size(1), device=labels.device).unsqueeze(0)
 
@@ -101,7 +112,6 @@ def get_output_distribution(logits, labels, top_p=0.8, alpha=0.0, temperature=0.
         )
 
     return probs, ground_truth_probs
-
 
 def collate_fn(batch, tokenizer, max_length, device):
     prompts = [item['prompt']for item in batch]
@@ -156,7 +166,6 @@ def train(model, ref_model, tokenizer, optimizer, train_dataloader, epochs=1, gr
             del ref_outputs, ref_logits
             torch.cuda.empty_cache()
 
-            # 2. Aktives Modell (hier werden Gradienten benötigt)
             model_outputs = model(
                 prompt_disprefered_ids, 
                 attention_mask=prompt_disprefered_mask,
@@ -167,14 +176,20 @@ def train(model, ref_model, tokenizer, optimizer, train_dataloader, epochs=1, gr
 
             loss = calculate_loss(model_disprefered_logits, ground_truth_distribution)
 
+            if torch.isnan(loss) or torch.isinf(loss):
+                optimizer.zero_grad()
+                continue
+
             loss = loss / gradient_accumulation_steps
             loss.backward()
 
             if (step + 1) % gradient_accumulation_steps == 0:
+                torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
                 optimizer.step()
                 optimizer.zero_grad()
 
         if len(train_dataloader) % gradient_accumulation_steps != 0:
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
             optimizer.zero_grad()
 
@@ -183,7 +198,6 @@ def train(model, ref_model, tokenizer, optimizer, train_dataloader, epochs=1, gr
         print(f"Epoch [{epoch+1}/10], Loss: {loss.item()}")
         wandb.log({'epoch loss': loss.item()})
 
-        # every epoch, save the model
         output_dir = wandb.config.output_dir + "/" + f"PROD_epoch{epoch}_lr{wandb.config.learning_rate}"
         model.save_pretrained(output_dir)
         tokenizer.save_pretrained(output_dir)

@@ -16,15 +16,15 @@ python PROD.py \
 --output_dir ${SaveModelPath} \
 --train_data_path ${DatasetPath} \
 --alpha 0.0 \
---num_train_epochs 10 \
+--num_train_epochs 2 \
 --learning_rate ${lr} \
 --per_device_train_batch_size 1 \
 --gradient_accumulation_steps 32 \
 --logging_steps 1 \
---save_total_limit 2 \
 --overwrite_output_dir \
 --do_train \
 --save_strategy no || exit
+
 
 OutputDir="outputs/results/PROD_lr${lr}"
 suffix="2025"
